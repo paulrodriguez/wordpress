@@ -1,0 +1,232 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Photolite\n"
+"POT-Creation-Date: 2016-05-09 14:58+0530\n"
+"PO-Revision-Date: 2016-05-09 14:58+0530\n"
+"Last-Translator: \n"
+"Language-Team: Flythemes Team <support@flythemes.net>\n"
+"Language: English\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+#: content.php:30
+msgid "Read More &raquo;"
+msgstr ""
+
+#: header.php:81
+msgid "Slide Title "
+msgstr ""
+
+#: header.php:84
+msgid ""
+"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vitae est at "
+"dolor auctor faucibus. Aenean hendrerit lorem eget nisi vulputate, vitae "
+"fringilla ligula dignissim. Phasellus feugiat quam efficitur Lorem ipsum "
+"dolor sit amet, consectetur adipiscing elit. Fusce vitae est at dolor auctor "
+"faucibus. Aenean hendrerit lorem eget nisi vulputate, vitae fringilla ligula "
+"dignissim. Phasellus feugiat quam efficitur"
+msgstr ""
+
+#: no-results.php:14
+msgid "Nothing Found"
+msgstr ""
+
+#: no-results.php:23
+msgid ""
+"Sorry, but nothing matched your search terms. Please try again with some "
+"different keywords."
+msgstr ""
+
+#: no-results.php:28
+msgid ""
+"It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps "
+"searching can help."
+msgstr ""
+
+#: sidebar-page.php:15
+#: sidebar.php:15
+msgid "Archives"
+msgstr ""
+
+#: sidebar-page.php:21
+#: sidebar.php:21
+msgid "Meta"
+msgstr ""
+
+#: inc/customizer.php:53
+msgid "Color Scheme"
+msgstr ""
+
+#: inc/customizer.php:54
+msgid "Select color from here"
+msgstr ""
+
+#: inc/customizer.php:61
+msgid "Slider Settings"
+msgstr ""
+
+#: inc/customizer.php:62
+msgid "Add slider images here."
+msgstr ""
+
+#: inc/customizer.php:77
+msgid "Slide Image 1 (1440x700)"
+msgstr ""
+
+#: inc/customizer.php:85
+msgid "Responsive Design"
+msgstr ""
+
+#: inc/customizer.php:90
+msgid "Slide Title 1"
+msgstr ""
+
+#: inc/customizer.php:96
+msgid "This is description for slider one."
+msgstr ""
+
+#: inc/customizer.php:101
+msgid "Slide Description 1"
+msgstr ""
+
+#: inc/customizer.php:114
+msgid "Slide Link 1"
+msgstr ""
+
+#: inc/customizer.php:130
+msgid "Slide Image 2 (1440x700)"
+msgstr ""
+
+#: inc/customizer.php:138
+msgid "Flexible Design"
+msgstr ""
+
+#: inc/customizer.php:143
+msgid "Slide Title 2"
+msgstr ""
+
+#: inc/customizer.php:149
+msgid "This is description for slide two"
+msgstr ""
+
+#: inc/customizer.php:154
+msgid "Slide Description 2"
+msgstr ""
+
+#: inc/customizer.php:167
+msgid "Slide Link 2"
+msgstr ""
+
+#: inc/customizer.php:183
+msgid "Slide Image 3 (1440x700)"
+msgstr ""
+
+#: inc/customizer.php:191
+msgid "Awesome Features"
+msgstr ""
+
+#: inc/customizer.php:196
+msgid "Slide Title 3"
+msgstr ""
+
+#: inc/customizer.php:202
+msgid "This is description for slide three"
+msgstr ""
+
+#: inc/customizer.php:207
+msgid "Slide Description 3"
+msgstr ""
+
+#: inc/customizer.php:220
+msgid "Slide Link 3"
+msgstr ""
+
+#: inc/customizer.php:227
+msgid "Homepage Boxes"
+msgstr ""
+
+#: inc/customizer.php:228
+msgid "Select Pages from the dropdown"
+msgstr ""
+
+#: inc/customizer.php:243
+msgid "Choose a page for box one:"
+msgstr ""
+
+#: inc/customizer.php:259
+msgid "Choose a page for box Two:"
+msgstr ""
+
+#: inc/customizer.php:275
+msgid "Choose a page for box Three:"
+msgstr ""
+
+#: inc/customizer.php:291
+msgid "Choose a page for box Four:"
+msgstr ""
+
+#: inc/customizer.php:297
+msgid "Footer Text"
+msgstr ""
+
+#: inc/customizer.php:298
+msgid "Add some text for footer like copyright etc."
+msgstr ""
+
+#: inc/customizer.php:303
+msgid "Photolite 2016 |"
+msgstr ""
+
+#: inc/customizer.php:308
+msgid "Copyright Text"
+msgstr ""
+
+#: inc/customizer.php:316
+msgid "Documentation &amp; Support"
+msgstr ""
+
+#: inc/customizer.php:318
+msgid "For documentation and support check this link :"
+msgstr ""
+
+#: inc/template-tags.php:32
+msgid "Post navigation"
+msgstr ""
+
+#: inc/template-tags.php:42
+msgid "<span class=\"meta-nav\">&larr;</span> Older posts"
+msgstr ""
+
+#: inc/template-tags.php:46
+msgid "Newer posts <span class=\"meta-nav\">&rarr;</span>"
+msgstr ""
+
+#: inc/template-tags.php:69
+msgid "Pingback:"
+msgstr ""
+
+#: inc/template-tags.php:69
+#: inc/template-tags.php:88
+msgid "Edit"
+msgstr ""
+
+#: inc/template-tags.php:82
+#, php-format
+msgid "<cite class=\"fn\">%s</cite> on"
+msgstr ""
+
+#: inc/template-tags.php:92
+msgid "Your comment is awaiting moderation."
+msgstr ""
+
+#: inc/template-tags.php:183
+#, php-format
+msgid ""
+"<span class=\"posted-on\">Published %1$s</span><span class=\"byline\"> by "
+"%2$s</span>"
+msgstr ""

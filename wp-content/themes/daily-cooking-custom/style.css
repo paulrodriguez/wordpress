@@ -1,0 +1,175 @@
+/*
+Theme Name: Daily Cooking Custom
+Theme URI: http://newinternetorder.com/
+Author: Karol K & ThemeIsle
+Author URI: http://themeIsle.com/
+Description: Daily Cooking Custom is a custom theme created
+for the buyers of "WordPress Complete"
+Version: 1.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: daily-cooking-custom
+Tags: brown, orange, tan, white, yellow, two-columns,
+right-sidebar, flexible-width, custom-header, custommenu, translation-ready
+*/
+/* setting up the basic elements - starter setup */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+border: 0;
+font-family: inherit;
+font-size: 100%;
+font-style: inherit;
+font-weight: inherit;
+margin: 0;
+outline: 0;
+padding: 0;
+vertical-align: baseline;
+}
+html {
+font-size: 62.5%;
+overflow-y: scroll;
+-webkit-text-size-adjust: 100%;
+-ms-text-size-adjust: 100%;
+box-sizing: border-box;
+}
+*, *:before, *:after {
+box-sizing: inherit;
+}
+body {
+background: #fff;
+}
+/* resetting the basic content blocks */
+article, aside, details, figcaption, figure, footer, header, main,
+nav, section {
+display: block;
+}
+/* resetting the lists */
+ol, ul {
+list-style: none;
+}
+table {
+border-collapse: separate;
+border-spacing: 0;
+}
+caption, th, td {
+font-weight: normal;
+text-align: left;
+}
+blockquote:before, blockquote:after, q:before, q:after {
+content: "";
+}
+blockquote, q {
+quotes: " '";
+}
+a:focus {
+outline: thin dotted;
+}
+a:hover, a:active {
+outline: 0;
+}
+a img {
+border: 0;
+}
+
+/*---------
+Typography
+-----------*/
+body, button, input, select, textarea {}
+h1, h2, h3, h4, h5, h6 {}
+	h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {}
+	p {}
+	b, strong {}
+	dfn, cite, em, i {}
+	blockquote {}
+	address {}
+	pre {}
+	code, kbd, tt, var {}
+	abbr, acronym {}
+	mark, ins {}
+	sup, sub {}
+	small {}
+	big {}
+	/*--------
+	Elements
+	---------*/
+	hr {}
+	ul, ol {}
+	dt {}
+	dd {}
+	img {}
+	figure {}
+	table {}
+	button, input, select, textarea {}
+		.site-header {
+	width: 15%;
+	float: left;
+	height: auto;
+	background: #279090;
+	margin-right: 2.5%;
+	border-radius: 6px;
+	}
+	#page {
+	width: 1160px;
+	margin: 0 auto;
+	margin-top: 50px;
+	position: relative;
+	overflow: auto;
+	}
+	#primary {
+width: 56%;
+float: left;
+}
+/* Navigation */
+.main-navigation {
+clear: both;
+display: block;
+float: left;
+width: 100%;
+}
+/* Alignments */
+.alignleft {
+display: inline;
+float: left;
+margin-right: 1.5em;
+}
+.alignright {
+display: inline;
+float: right;
+margin-left: 1.5em;
+}
+.aligncenter {
+clear: both;
+display: block;
+margin: 0 auto;
+}
+.site-content .page, .site-content .post {
+margin-bottom: 40px;
+background-color: white;
+border-radius: 6px;
+}
+.entry-header h1.entry-title {
+text-align: center;
+}
+.site-content .entry-content {
+padding: 10px 20px;
+}
+#secondary {
+width: 24.5%;
+float: left;
+height: auto;
+margin-left: 2%;
+opacity: 0.6;
+background-color: white;
+border-radius: 3px;
+padding: 0 10px;
+}
+.site-footer {
+float: right;
+padding: 20px;
+}

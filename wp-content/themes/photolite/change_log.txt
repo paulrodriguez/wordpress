@@ -1,0 +1,30 @@
+Version 1.0
+i) Intial version Release
+
+Version 1.1
+i) Removed unused functions and make some changes in css file.
+
+Version 1.2
+i) Added translation functions and make some changes as per reviewers instructions.
+
+
+Version 1.2.1
+i) Added transalation function and resolved issues as asked by reviewer.
+
+Version 1.2.2
+i) Added escape functions.
+
+Version 1.2.3
+i) Resolved layout issue.
+
+Version 1.2.4
+i) Resolve site title and tagline issue.
+
+Version 1.2.5
+i) Site title and tagline options is working.
+
+Version 1.2.6
+i) Resolved homepage boxes link issue.
+
+Version 1.2.7
+i) Theme url updated.
