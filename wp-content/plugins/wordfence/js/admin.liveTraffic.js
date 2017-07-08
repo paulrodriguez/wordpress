@@ -356,7 +356,9 @@
 				case 'lockedOut':
 					return 'locked out from logging in';
 
+				case 'blocked:waf-always':
 				case 'blocked:wordfence':
+				case 'blocked:wfsnrepeat': 
 					desc = self.actionDescription();
 					if (desc && desc.toLowerCase().indexOf('block') === 0) {
 						return 'b' + desc.substring(1);
@@ -403,7 +405,7 @@
 
 		self.cssClasses = ko.pureComputed(function() {
 			var classes = 'wfActEvent';
-			if (self.statusCode() == 403) {
+			if (self.statusCode() == 403 || self.statusCode() == 503) {
 				classes += ' wfActionBlocked';
 			}
 			if (self.statusCode() == 404) {
@@ -646,6 +648,8 @@
 		liveTrafficWrapper.find('form').submit();
 		WFAD.mode = 'liveTraffic';
 
+		var legendWrapper = $('#wf-live-traffic-legend-wrapper');
+		var placeholder = $('#wf-live-traffic-legend-placeholder');
 		var legend = $('#wf-live-traffic-legend');
 		var adminBar = $('#wpadminbar');
 		var liveTrafficListings = $('#wf-lt-listings');
@@ -654,10 +658,21 @@
 		var loadingListings = false;
 		$(window).on('scroll', function() {
 			var win = $(this);
-			if (liveTrafficWrapper.offset().top < win.scrollTop() + adminBar.outerHeight() + 20) {
+			if (legendWrapper.offset().top < win.scrollTop() + adminBar.outerHeight() + 10) {
+				var legendWidth = legend.width();
+				var legendHeight = legend.height();
+				
 				legend.addClass('sticky');
+				legend.css('width', legendWidth);
+				legend.css('height', legendHeight);
+				placeholder.addClass('sticky');
+				placeholder.css('width', legendWidth);
+				placeholder.css('height', legendHeight);
 			} else {
 				legend.removeClass('sticky');
+				legend.css('width', 'auto');
+				legend.css('height', 'auto');
+				placeholder.removeClass('sticky');
 			}
 
 			var firstRow = liveTrafficListings.children().first();

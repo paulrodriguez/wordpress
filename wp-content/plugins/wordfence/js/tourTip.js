@@ -33,13 +33,21 @@ window['wordfenceExt'] = {
 			function(){ jQuery('#wordfenceAdminEmailWarning').fadeOut(); }
 		);
 	},
-	removeFromCache: function(postID){
-		this.ajax('wordfence_removeFromCache', {
-			id: postID
-			}, 
-			function(res){ if(res.ok){ alert("Item removed from the Wordfence cache."); } },
-			function(){}
-			);
+	suPHPWAFUpdateChoice: function(choice) {
+		this.ajax('wordfence_suPHPWAFUpdateChoice', {
+				choice: choice
+			},
+			function(res){ jQuery('#wordfenceSuPHPUpdateWarning').fadeOut(); },
+			function(){ jQuery('#wordfenceSuPHPUpdateWarning').fadeOut(); }
+		);
+	},
+	misconfiguredHowGetIPsChoice : function(choice) {
+		this.ajax('wordfence_misconfiguredHowGetIPsChoice', {
+				choice: choice
+			},
+			function(res){ jQuery('#wordfenceMisconfiguredHowGetIPsNotice').fadeOut(); },
+			function(){ jQuery('#wordfenceMisconfiguredHowGetIPsNotice').fadeOut(); }
+		);
 	},
 	ajax: function(action, data, cb, cbErr, noLoading){
 		if(typeof(data) == 'string'){

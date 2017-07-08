@@ -1,87 +1,100 @@
 <?php
 class wfConfig {
+	const AUTOLOAD = 'yes';
+	const DONT_AUTOLOAD = 'no';
+	
 	public static $diskCache = array();
 	private static $diskCacheDisabled = false; //enables if we detect a write fail so we don't keep calling stat()
 	private static $cacheDisableCheckDone = false;
 	private static $table = false;
+	private static $tableExists = true;
 	private static $cache = array();
 	private static $DB = false;
 	private static $tmpFileHeader = "<?php\n/* Wordfence temporary file security header */\necho \"Nothing to see here!\\n\"; exit(0);\n?>";
 	private static $tmpDirCache = false;
 	public static $defaultConfig = array(
 		"checkboxes" => array(
-			"alertOn_critical" => true,
-			"alertOn_update" => false,
-			"alertOn_warnings" => true,
-			"alertOn_throttle" => false,
-			"alertOn_block" => true,
-			"alertOn_loginLockout" => true,
-			"alertOn_lostPasswdForm" => true,
-			"alertOn_adminLogin" => true,
-			"alertOn_nonAdminLogin" => false,
-			"liveTrafficEnabled" => true,
-			"scansEnabled_checkReadableConfig" => true,
-			"advancedCommentScanning" => false,
-			"checkSpamIP" => false,
-			"spamvertizeCheck" => false,
-			"liveTraf_ignorePublishers" => true,
-			//"perfLoggingEnabled" => false,
-			"scheduledScansEnabled" => true,
-			"scansEnabled_public" => false,
-			"scansEnabled_heartbleed" => true,
-			"scansEnabled_core" => true,
-			"scansEnabled_themes" => false,
-			"scansEnabled_plugins" => false,
-			"scansEnabled_coreUnknown" => true,
-			"scansEnabled_malware" => true,
-			"scansEnabled_fileContents" => true,
-			"scansEnabled_posts" => true,
-			"scansEnabled_comments" => true,
-			"scansEnabled_passwds" => true,
-			"scansEnabled_diskSpace" => true,
-			"scansEnabled_options" => true,
-			"scansEnabled_wpscan_fullPathDisclosure" => true,
-			"scansEnabled_wpscan_directoryListingEnabled" => true,
-			"scansEnabled_dns" => true,
-			"scansEnabled_scanImages" => false,
-			"scansEnabled_highSense" => false,
-			"scansEnabled_oldVersions" => true,
-			"scansEnabled_suspiciousAdminUsers" => true,
-			"firewallEnabled" => true,
-			"blockFakeBots" => false,
-			"autoBlockScanners" => true,
-			"loginSecurityEnabled" => true,
-			"loginSec_lockInvalidUsers" => false,
-			"loginSec_maskLoginErrors" => true,
-			"loginSec_blockAdminReg" => true,
-			"loginSec_disableAuthorScan" => true,
-			"loginSec_disableOEmbedAuthor" => false,
-			"other_hideWPVersion" => true,
-			"other_noAnonMemberComments" => true,
-			"other_blockBadPOST" => false,
-			"other_scanComments" => true,
-			"other_pwStrengthOnUpdate" => true,
-			"other_WFNet" => true,
-			"other_scanOutside" => false,
-			"deleteTablesOnDeact" => false,
-			"autoUpdate" => false,
-			"disableCookies" => false,
-			"startScansRemotely" => false,
-			"disableConfigCaching" => false,
-			"addCacheComment" => false,
-			"disableCodeExecutionUploads" => false,
-			"allowHTTPSCaching" => false,
-			"debugOn" => false,
-			'email_summary_enabled' => true,
-			'email_summary_dashboard_widget_enabled' => true,
-			'ssl_verify' => true,
-			'ajaxWatcherDisabled_front' => false,
-			'ajaxWatcherDisabled_admin' => false,
+			"alertOn_critical" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			"alertOn_update" => array('value' => false, 'autoload' => self::AUTOLOAD),
+			"alertOn_warnings" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			"alertOn_throttle" => array('value' => false, 'autoload' => self::AUTOLOAD),
+			"alertOn_block" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			"alertOn_loginLockout" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			"alertOn_lostPasswdForm" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			"alertOn_adminLogin" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			"alertOn_firstAdminLoginOnly" => array('value' => false, 'autoload' => self::AUTOLOAD),
+			"alertOn_nonAdminLogin" => array('value' => false, 'autoload' => self::AUTOLOAD),
+			"alertOn_firstNonAdminLoginOnly" => array('value' => false, 'autoload' => self::AUTOLOAD),
+			"alertOn_wordfenceDeactivated" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			"liveTrafficEnabled" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			"advancedCommentScanning" => array('value' => false, 'autoload' => self::AUTOLOAD),
+			"checkSpamIP" => array('value' => false, 'autoload' => self::AUTOLOAD),
+			"spamvertizeCheck" => array('value' => false, 'autoload' => self::AUTOLOAD),
+			"liveTraf_ignorePublishers" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			//"perfLoggingEnabled" => array('value' => false, 'autoload' => self::AUTOLOAD),
+			"scheduledScansEnabled" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			"lowResourceScansEnabled" => array('value' => false, 'autoload' => self::AUTOLOAD),
+			"scansEnabled_public" => array('value' => false, 'autoload' => self::AUTOLOAD),
+			"scansEnabled_heartbleed" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			"scansEnabled_checkHowGetIPs" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			"scansEnabled_core" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			"scansEnabled_themes" => array('value' => false, 'autoload' => self::AUTOLOAD),
+			"scansEnabled_plugins" => array('value' => false, 'autoload' => self::AUTOLOAD),
+			"scansEnabled_coreUnknown" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			"scansEnabled_malware" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			"scansEnabled_fileContents" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			"scansEnabled_checkReadableConfig" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			"scansEnabled_suspectedFiles" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			"scansEnabled_posts" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			"scansEnabled_comments" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			"scansEnabled_passwds" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			"scansEnabled_diskSpace" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			"scansEnabled_options" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			"scansEnabled_wpscan_fullPathDisclosure" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			"scansEnabled_wpscan_directoryListingEnabled" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			"scansEnabled_dns" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			"scansEnabled_scanImages" => array('value' => false, 'autoload' => self::AUTOLOAD),
+			"scansEnabled_highSense" => array('value' => false, 'autoload' => self::AUTOLOAD),
+			"scansEnabled_oldVersions" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			"scansEnabled_suspiciousAdminUsers" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			"firewallEnabled" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			"blockFakeBots" => array('value' => false, 'autoload' => self::AUTOLOAD),
+			"autoBlockScanners" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			"loginSecurityEnabled" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			"loginSec_lockInvalidUsers" => array('value' => false, 'autoload' => self::AUTOLOAD),
+			"loginSec_maskLoginErrors" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			"loginSec_blockAdminReg" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			"loginSec_disableAuthorScan" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			"loginSec_disableOEmbedAuthor" => array('value' => false, 'autoload' => self::AUTOLOAD),
+			"other_hideWPVersion" => array('value' => false, 'autoload' => self::AUTOLOAD),
+			"other_noAnonMemberComments" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			"other_blockBadPOST" => array('value' => false, 'autoload' => self::AUTOLOAD),
+			"other_scanComments" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			"other_pwStrengthOnUpdate" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			"other_WFNet" => array('value' => true, 'autoload' => self::AUTOLOAD),
+			"other_scanOutside" => array('value' => false, 'autoload' => self::AUTOLOAD),
+			"deleteTablesOnDeact" => array('value' => false, 'autoload' => self::AUTOLOAD),
+			"autoUpdate" => array('value' => false, 'autoload' => self::AUTOLOAD),
+			"disableCookies" => array('value' => false, 'autoload' => self::AUTOLOAD),
+			"startScansRemotely" => array('value' => false, 'autoload' => self::AUTOLOAD),
+			"disableConfigCaching" => array('value' => false, 'autoload' => self::AUTOLOAD),
+			"addCacheComment" => array('value' => false, 'autoload' => self::AUTOLOAD),
+			"disableCodeExecutionUploads" => array('value' => false, 'autoload' => self::AUTOLOAD),
+			"allowHTTPSCaching" => array('value' => false, 'autoload' => self::AUTOLOAD),
+			"debugOn" => array('value' => false, 'autoload' => self::AUTOLOAD),
+			'email_summary_enabled' => array('value' => true, 'autoload' => self::AUTOLOAD),
+			'email_summary_dashboard_widget_enabled' => array('value' => true, 'autoload' => self::AUTOLOAD),
+			'ssl_verify' => array('value' => true, 'autoload' => self::AUTOLOAD),
+			'ajaxWatcherDisabled_front' => array('value' => false, 'autoload' => self::AUTOLOAD),
+			'ajaxWatcherDisabled_admin' => array('value' => false, 'autoload' => self::AUTOLOAD),
+			'wafAlertOnAttacks' => array('value' => true, 'autoload' => self::AUTOLOAD),
+			'disableWAFIPBlocking' => array('value' => false, 'autoload' => self::AUTOLOAD),
+			'showAdminBarMenu' => array('value' => true, 'autoload' => self::AUTOLOAD),
 		),
 		"otherParams" => array(
 			"scan_include_extra" => "",
 			// 'securityLevel' => '2',
-			"alertEmails" => "", "liveTraf_ignoreUsers" => "", "liveTraf_ignoreIPs" => "", "liveTraf_ignoreUA" => "",  "apiKey" => "", "maxMem" => '256', 'scan_exclude' => '', 'whitelisted' => '', 'bannedURLs' => '', 'maxExecutionTime' => '', 'howGetIPs' => '', 'actUpdateInterval' => '', 'alert_maxHourly' => 0, 'loginSec_userBlacklist' => '',
+			"alertEmails" => "", "liveTraf_ignoreUsers" => "", "liveTraf_ignoreIPs" => "", "liveTraf_ignoreUA" => "",  "apiKey" => "", "maxMem" => '256', 'scan_exclude' => '', 'scan_maxIssues' => 1000, 'scan_maxDuration' => '', 'whitelisted' => '', 'bannedURLs' => '', 'maxExecutionTime' => '', 'howGetIPs' => '', 'actUpdateInterval' => '', 'alert_maxHourly' => 0, 'loginSec_userBlacklist' => '',
 			'liveTraf_maxRows' => 2000,
 			"neverBlockBG" => "neverBlockVerified",
 			"loginSec_countFailMins" => "240",
@@ -102,27 +115,33 @@ class wfConfig {
 			'maxScanHits' => "DISABLED",
 			'maxScanHits_action' => "throttle",
 			'blockedTime' => "300",
-			'email_summary_interval' => 'biweekly',
-			'email_summary_excluded_directories' => 'wp-content/cache,wp-content/wfcache,wp-content/plugins/wordfence/tmp',
-			'allowed404s' => "/favicon.ico\n/apple-touch-icon*.png\n/*@2x.png",
+			'email_summary_interval' => 'weekly',
+			'email_summary_excluded_directories' => 'wp-content/cache,wp-content/plugins/wordfence/tmp',
+			'allowed404s' => "/favicon.ico\n/apple-touch-icon*.png\n/*@2x.png\n/browserconfig.xml",
+			'wafAlertWhitelist' => '',
+			'wafAlertInterval' => 600,
+			'wafAlertThreshold' => 100,
 		)
 	);
-	public static function setDefaults(){
-		foreach(self::$defaultConfig['checkboxes'] as $key => $val){
-			if(self::get($key) === false){
-				self::set($key, $val ? '1' : '0');
+	public static $serializedOptions = array('lastAdminLogin', 'scanSched', 'emailedIssuesList', 'wf_summaryItems', 'adminUserList', 'twoFactorUsers', 'alertFreqTrack', 'wfStatusStartMsgs', 'vulnerabilities_plugin', 'vulnerabilities_theme', 'dashboardData');
+	public static function setDefaults() {
+		foreach (self::$defaultConfig['checkboxes'] as $key => $config) {
+			$val = $config['value'];
+			$autoload = $config['autoload'];
+			if (self::get($key) === false) {
+				self::set($key, $val ? '1' : '0', $autoload);
 			}
 		}
-		foreach(self::$defaultConfig['otherParams'] as $key => $val){
-			if(self::get($key) === false){
+		foreach (self::$defaultConfig['otherParams'] as $key => $val) {
+			if (self::get($key) === false) {
 				self::set($key, $val);
 			}
 		}
-		self::set('encKey', substr(wfUtils::bigRandomHex(),0 ,16) );
-		if(self::get('maxMem', false) === false ){
+		self::set('encKey', substr(wfUtils::bigRandomHex(), 0, 16));
+		if (self::get('maxMem', false) === false) {
 			self::set('maxMem', '256');
 		}
-		if(self::get('other_scanOutside', false) === false){
+		if (self::get('other_scanOutside', false) === false) {
 			self::set('other_scanOutside', 0);
 		}
 
@@ -131,6 +150,71 @@ class wfConfig {
 		} else {
 			wfActivityReport::disableCronJob();
 		}
+	}
+	public static function loadAllOptions() {
+		global $wpdb;
+		
+		$options = wp_cache_get('alloptions', 'wordfence');
+		if (!$options) {
+			$table = self::table();
+			self::updateTableExists();
+			$suppress = $wpdb->suppress_errors();
+			if (!($rawOptions = $wpdb->get_results("SELECT name, val FROM {$table} WHERE autoload = 'yes'"))) {
+				$rawOptions = $wpdb->get_results("SELECT name, val FROM {$table}");
+			}
+			$wpdb->suppress_errors($suppress);
+			$options = array();
+			foreach ((array) $rawOptions as $o) {
+				if (in_array($o->name, self::$serializedOptions)) {
+					$val = maybe_unserialize($o->val);
+					if ($val) {
+						$options[$o->name] = $val;
+					}
+				}
+				else {
+					$options[$o->name] = $o->val;
+				}
+			}
+			
+			wp_cache_add_non_persistent_groups('wordfence');
+			wp_cache_add('alloptions', $options, 'wordfence');
+		}
+		
+		return $options;
+	}
+	public static function updateTableExists() {
+		$table = self::table();
+		self::$tableExists = (strtolower(self::getDB()->querySingle("SHOW TABLES LIKE '%s'", $table)) == strtolower($table));
+	}
+	private static function updateCachedOption($name, $val) {
+		$options = self::loadAllOptions();
+		$options[$name] = $val;
+		wp_cache_set('alloptions', $options, 'wordfence');
+	}
+	private static function removeCachedOption($name) {
+		$options = self::loadAllOptions();
+		if (isset($options[$name])) {
+			unset($options[$name]);
+			wp_cache_set('alloptions', $options, 'wordfence');
+		}
+	}
+	private static function getCachedOption($name) {
+		$options = self::loadAllOptions();
+		if (isset($options[$name])) {
+			return $options[$name];
+		}
+		
+		$table = self::table();
+		$val = self::getDB()->querySingle("SELECT val FROM {$table} WHERE name='%s'", $name);
+		if ($val !== null) {
+			$options[$name] = $val;
+			wp_cache_set('alloptions', $options, 'wordfence');
+		}
+		return $val;
+	}
+	private static function hasCachedOption($name) {
+		$options = self::loadAllOptions();
+		return isset($options[$name]);
 	}
 	public static function getExportableOptionsKeys(){
 		$ret = array();
@@ -147,16 +231,24 @@ class wfConfig {
 		}
 		return $ret;
 	}
-	public static function parseOptions(){
+	public static function parseOptions($excludeOmitted = false) {
 		$ret = array();
-		foreach(self::$defaultConfig['checkboxes'] as $key => $val){ //value is not used. We just need the keys for validation
-			$ret[$key] = isset($_POST[$key]) ? '1' : '0';
+		foreach (self::$defaultConfig['checkboxes'] as $key => $val) { //value is not used. We just need the keys for validation
+			if ($excludeOmitted && isset($_POST[$key])) {
+				$ret[$key] = (int) $_POST[$key];
+			}
+			else if (!$excludeOmitted || isset($_POST[$key])) {
+				$ret[$key] = isset($_POST[$key]) ? '1' : '0';
+			}
 		}
-		foreach(self::$defaultConfig['otherParams'] as $key => $val){
-			if(isset($_POST[$key])){
-				$ret[$key] = stripslashes($_POST[$key]);
-			} else {
-				error_log("Missing options param \"$key\" when parsing parameters.");
+		foreach (self::$defaultConfig['otherParams'] as $key => $val) {
+			if (!$excludeOmitted || isset($_POST[$key])) {
+				if (isset($_POST[$key])) {
+					$ret[$key] = stripslashes($_POST[$key]);
+				}
+				else {
+					error_log("Missing options param \"$key\" when parsing parameters.");
+				}
 			}
 		}
 		/* for debugging only:
@@ -173,9 +265,6 @@ class wfConfig {
 			self::set($key, $val);
 		}
 	}
-	public static function clearCache(){
-		self::$cache = array();
-	}
 	public static function getHTML($key){
 		return esc_html(self::get($key));
 	}
@@ -185,101 +274,84 @@ class wfConfig {
 			$val = 0;
 		}
 		self::set($key, $val + 1);
+		return $val + 1;
 	}
-	public static function set($key, $val){
-		if($key == 'disableConfigCaching'){
-			self::getDB()->queryWrite("insert into " . self::table() . " (name, val) values ('%s', '%s') ON DUPLICATE KEY UPDATE val='%s'", $key, $val, $val);
-			return;
+	public static function atomicInc($key) {
+		if (!self::$tableExists) {
+			return false;
 		}
-	
-		if(is_array($val)){
+		
+		global $wpdb;
+		$old_suppress_errors = $wpdb->suppress_errors(true);
+		$table = self::table();
+		$rowExists = false;
+		do {
+			if (!$rowExists && $wpdb->query($wpdb->prepare("INSERT INTO {$table} (name, val, autoload) values (%s, %s, %s)", $key, 1, self::DONT_AUTOLOAD))) {
+				$val = 1;
+				$successful = true;
+			}
+			else {
+				$rowExists = true;
+				$val = self::get($key, 1);
+				if ($wpdb->query($wpdb->prepare("UPDATE {$table} SET val = %s WHERE name = %s AND val = %s", $val + 1, $key, $val))) {
+					$val++;
+					$successful = true;
+				}
+			}
+		} while (!$successful);
+		$wpdb->suppress_errors($old_suppress_errors);
+		return $val;
+	}
+	public static function set($key, $val, $autoload = self::AUTOLOAD) {
+		global $wpdb;
+		
+		if (is_array($val)) {
 			$msg = "wfConfig::set() got an array as second param with key: $key and value: " . var_export($val, true);
 			wordfence::status(1, 'error', $msg);
 			return;
 		}
 
-		if (($key == 'apiKey' || $key == 'isPaid') && wfWAF::getInstance() && !WFWAF_SUBDIRECTORY_INSTALL) {
+		if (($key == 'apiKey' || $key == 'isPaid' || $key == 'other_WFNet') && wfWAF::getInstance() && !WFWAF_SUBDIRECTORY_INSTALL) {
 			try {
 				wfWAF::getInstance()->getStorageEngine()->setConfig($key, $val);
 			} catch (wfWAFStorageFileException $e) {
 				error_log($e->getMessage());
 			}
 		}
-
-		self::getDB()->queryWrite("insert into " . self::table() . " (name, val) values ('%s', '%s') ON DUPLICATE KEY UPDATE val='%s'", $key, $val, $val);
-		self::$cache[$key] = $val;
-		self::clearDiskCache();
+		
+		if (!self::$tableExists) {
+			return;
+		
+		}
+		$table = self::table();
+		if ($wpdb->query($wpdb->prepare("INSERT INTO {$table} (name, val, autoload) values (%s, %s, %s) ON DUPLICATE KEY UPDATE val = %s, autoload = %s", $key, $val, $autoload, $val, $autoload)) !== false && $autoload != self::DONT_AUTOLOAD) {
+			self::updateCachedOption($key, $val);
+		}
+		
+		if (!WFWAF_SUBDIRECTORY_INSTALL && class_exists('wfWAFIPBlocksController') && (substr($key, 0, 4) == 'cbl_' || $key == 'blockedTime' || $key == 'disableWAFIPBlocking')) {
+			wfWAFIPBlocksController::synchronizeConfigSettings();
+		} 
 	}
-	private static function getCacheFile(){
-		return WORDFENCE_PATH . 'tmp/configCache.php';
-	}
-	public static function clearDiskCache(){
-		//When we write to the cache we just trash the whole cache on the first write. Second write won't get called because we've disabled the cache.
-		// Neither will anything be loaded from the cache for the rest of this request and it also won't be updated.
-		// On the next request presumably we won't be doing a set() and so the cache will be populated again and continue to be used 
-		// for each request as long as set() isn't called which would start the whole process over again.
-		if(! self::$diskCacheDisabled){ //We haven't had a write error to cache (so the cache is working) and clearDiskCache has not been called already
-			$cacheFile = self::getCacheFile();
-			@unlink($cacheFile);
-			wfConfig::$diskCache = array();
+	public static function get($key, $default = false) {
+		global $wpdb;
+		
+		if (self::hasCachedOption($key)) {
+			return self::getCachedOption($key);
 		}
-		self::$diskCacheDisabled = true;
-	}
-	public static function get($key, $default = false){
-		if($key == 'disableConfigCaching'){
-			$val = self::getDB()->querySingle("select val from " . self::table() . " where name='%s'", $key);
-			return $val;
+		
+		if (!self::$tableExists) {
+			return $default;
 		}
-
-		if(! self::$cacheDisableCheckDone){
-			self::$cacheDisableCheckDone = true;
-			$cachingDisabledSetting = self::getDB()->querySingle("select val from " . self::table() . " where name='%s'", 'disableConfigCaching');
-			if($cachingDisabledSetting == '1'){
-				self::$diskCacheDisabled = true;
-			}
+		
+		$table = self::table();
+		if (!($option = $wpdb->get_row($wpdb->prepare("SELECT name, val, autoload FROM {$table} WHERE name = %s", $key)))) {
+			return $default;
 		}
-
-		if(!array_key_exists($key, self::$cache)){ 
-			$val = self::loadFromDiskCache($key);
-			//$val = self::getDB()->querySingle("select val from " . self::table() . " where name='%s'", $key);
-			self::$cache[$key] = $val;
+		
+		if ($option->autoload != self::DONT_AUTOLOAD) {
+			self::updateCachedOption($key, $option->val);
 		}
-		$val = self::$cache[$key];
-		return $val !== null ? $val : $default;
-	}
-	public static function loadFromDiskCache($key){
-		if(! self::$diskCacheDisabled){
-			if(isset(wfConfig::$diskCache[$key])){
-				return wfConfig::$diskCache[$key];
-			}
-
-			$cacheFile = self::getCacheFile();
-			if(is_file($cacheFile)){
-				//require($cacheFile); //will only require the file on first parse through this code. But we dynamically update the var and update the file with each get
-				try {
-					$cont = @file_get_contents($cacheFile);
-					if(strpos($cont, '<?php') === 0){ //"<?php die() XX"
-						$cont = substr($cont, strlen(self::$tmpFileHeader));
-						wfConfig::$diskCache = @unserialize($cont);
-						if(isset(wfConfig::$diskCache) && is_array(wfConfig::$diskCache) && isset(wfConfig::$diskCache[$key])){
-							return wfConfig::$diskCache[$key];
-						}
-					} //Else don't return a cached value because this is an old file without the php header so we're going to rewrite it. 
-				} catch(Exception $err){ } //file_get or unserialize may fail, so just fail quietly.
-			}
-		}
-		$val = self::getDB()->querySingle("select val from " . self::table() . " where name='%s'", $key);
-		if(self::$diskCacheDisabled){
-			return $val; 
-		}
-		wfConfig::$diskCache[$key] = isset($val) ? $val : '';
-		try {
-			$bytesWritten = @file_put_contents($cacheFile, self::$tmpFileHeader . serialize(wfConfig::$diskCache), LOCK_EX);
-		} catch(Exception $err2){}
-		if(! $bytesWritten){
-			self::$diskCacheDisabled = true;
-		}
-		return $val;
+		return $option->val;
 	}
 	
 	private static function canCompressValue() {
@@ -312,7 +384,15 @@ class wfConfig {
 		return 'wordfence_chunked_' . $key . '_';
 	}
 	
-	public static function get_ser($key, $default) {
+	public static function get_ser($key, $default = false, $cache = true) {
+		if (self::hasCachedOption($key)) {
+			return self::getCachedOption($key);
+		}
+		
+		if (!self::$tableExists) {
+			return $default;
+		}
+		
 		//Check for a chunked value first
 		$chunkedValueKey = self::ser_chunked_key($key);
 		$header = self::getDB()->querySingle("select val from " . self::table() . " where name=%s", $chunkedValueKey . 'header');
@@ -343,8 +423,16 @@ class wfConfig {
 				$inflated = @gzdecode($serialized);
 				if ($inflated !== false) {
 					unset($serialized);
+					if ($cache) {
+						self::updateCachedOption($key, unserialize($inflated));
+						return self::getCachedOption($key);
+					}
 					return unserialize($inflated);
 				}
+			}
+			if ($cache) {
+				self::updateCachedOption($key, unserialize($serialized));
+				return self::getCachedOption($key);
 			}
 			return unserialize($serialized);
 		}
@@ -359,6 +447,10 @@ class wfConfig {
 						return unserialize($inflated);
 					}
 				}
+				if ($cache) {
+					self::updateCachedOption($key, unserialize($serialized));
+					return self::getCachedOption($key);
+				}
 				return unserialize($serialized);
 			}
 		}
@@ -366,7 +458,7 @@ class wfConfig {
 		return $default;
 	}
 	
-	public static function set_ser($key, $val, $allowCompression = false) {
+	public static function set_ser($key, $val, $allowCompression = false, $autoload = self::AUTOLOAD) {
 		/*
 		 * Because of the small default value for `max_allowed_packet` and `max_long_data_size`, we're stuck splitting
 		 * large values into multiple chunks. To minimize memory use, the MySQLi driver is used directly when possible.
@@ -374,6 +466,11 @@ class wfConfig {
 		
 		global $wpdb;
 		$dbh = $wpdb->dbh;
+		$useMySQLi = (is_object($dbh) && $wpdb->use_mysqli);
+		
+		if (!self::$tableExists) {
+			return;
+		}
 		
 		self::delete_ser_chunked($key); //Ensure any old values for a chunked value are deleted first
 		
@@ -384,44 +481,50 @@ class wfConfig {
 			$data = serialize($val);
 		}
 		
-		if (!$wpdb->use_mysqli) {
+		if (!$useMySQLi) {
 			$data = bin2hex($data);
 		}
 		
 		$dataLength = strlen($data);
-		$chunkSize = intval((self::getDB()->getMaxAllowedPacketBytes() - 50) / 1.2); //Based on max_allowed_packet + 20% for escaping and SQL
+		$maxAllowedPacketBytes = self::getDB()->getMaxAllowedPacketBytes();
+		$chunkSize = intval((($maxAllowedPacketBytes < 1024 /* MySQL minimum, probably failure to fetch it */ ? 1024 * 1024 /* MySQL default */ : $maxAllowedPacketBytes) - 50) / 1.2); //Based on max_allowed_packet + 20% for escaping and SQL
 		$chunkSize = $chunkSize - ($chunkSize % 2); //Ensure it's even
 		$chunkedValueKey = self::ser_chunked_key($key);
 		if ($dataLength > $chunkSize) {
 			$chunks = 0;
 			while (($chunks * $chunkSize) < $dataLength) {
 				$dataChunk = substr($data, $chunks * $chunkSize, $chunkSize);
-				if ($wpdb->use_mysqli) {
+				if ($useMySQLi) {
 					$chunkKey = $chunkedValueKey . $chunks;
-					$stmt = $dbh->prepare("INSERT IGNORE INTO " . self::table() . " (name, val) VALUES (?, ?)");
+					$stmt = $dbh->prepare("INSERT IGNORE INTO " . self::table() . " (name, val, autoload) VALUES (?, ?, 'no')");
+					if ($stmt === false) {
+						wordfence::status(2, 'error', "Error writing value chunk for {$key} (MySQLi error: [{$dbh->errno}] {$dbh->error})");
+						return false;
+					}
 					$null = NULL;
 					$stmt->bind_param("sb", $chunkKey, $null);
 					
 					if (!$stmt->send_long_data(1, $dataChunk)) {
-						wordfence::status(2, 'error', "Error writing value chunk for {$key} (error: {$dbh->error})");
+						wordfence::status(2, 'error', "Error writing value chunk for {$key} (MySQLi error: [{$dbh->errno}] {$dbh->error})");
 						return false;
 					}
 					
 					if (!$stmt->execute()) {
-						wordfence::status(2, 'error', "Error finishing writing value for {$key} (error: {$dbh->error})");
+						wordfence::status(2, 'error', "Error finishing writing value for {$key} (MySQLi error: [{$dbh->errno}] {$dbh->error})");
 						return false;
 					}
 				}
 				else {
-					if (!self::getDB()->queryWrite(sprintf("insert ignore into " . self::table() . " (name, val) values (%%s, X'%s')", $dataChunk), $chunkedValueKey . $chunks)) {
-						wordfence::status(2, 'error', "Error writing value chunk for {$key} (error: {$wpdb->last_error})");
+					if (!self::getDB()->queryWrite(sprintf("insert ignore into " . self::table() . " (name, val, autoload) values (%%s, X'%s', 'no')", $dataChunk), $chunkedValueKey . $chunks)) {
+						$errno = mysql_errno($wpdb->dbh);
+						wordfence::status(2, 'error', "Error writing value chunk for {$key} (MySQL error: [$errno] {$wpdb->last_error})");
 						return false;
 					}
 				}
 				$chunks++;
 			}
 			
-			if (!self::getDB()->queryWrite(sprintf("insert ignore into " . self::table() . " (name, val) values (%%s, X'%s')", bin2hex(serialize(array('count' => $chunks)))), $chunkedValueKey . 'header')) {
+			if (!self::getDB()->queryWrite(sprintf("insert ignore into " . self::table() . " (name, val, autoload) values (%%s, X'%s', 'no')", bin2hex(serialize(array('count' => $chunks)))), $chunkedValueKey . 'header')) {
 				wordfence::status(2, 'error', "Error writing value header for {$key}");
 				return false;
 			}
@@ -429,23 +532,33 @@ class wfConfig {
 		else {
 			$exists = self::getDB()->querySingle("select name from " . self::table() . " where name='%s'", $key);
 			
-			if ($wpdb->use_mysqli) {
+			if ($useMySQLi) {
 				if ($exists) {
 					$stmt = $dbh->prepare("UPDATE " . self::table() . " SET val=? WHERE name=?");
+					if ($stmt === false) {
+						wordfence::status(2, 'error', "Error writing value for {$key} (MySQLi error: [{$dbh->errno}] {$dbh->error})");
+						return false;
+					}
+					$null = NULL;
+					$stmt->bind_param("bs", $null, $key);
 				}
 				else {
-					$stmt = $dbh->prepare("INSERT IGNORE INTO " . self::table() . " (val, name) VALUES (?, ?)");
+					$stmt = $dbh->prepare("INSERT IGNORE INTO " . self::table() . " (val, name, autoload) VALUES (?, ?, ?)");
+					if ($stmt === false) {
+						wordfence::status(2, 'error', "Error writing value for {$key} (MySQLi error: [{$dbh->errno}] {$dbh->error})");
+						return false;
+					}
+					$null = NULL;
+					$stmt->bind_param("bss", $null, $key, $autoload);
 				}
 				
-				$null = NULL;
-				$stmt->bind_param("bs", $null, $key);
 				if (!$stmt->send_long_data(0, $data)) {
-					wordfence::status(2, 'error', "Error writing value chunk for {$key} (error: {$dbh->error})");
+					wordfence::status(2, 'error', "Error writing value for {$key} (MySQLi error: [{$dbh->errno}] {$dbh->error})");
 					return false;
 				}
 				
 				if (!$stmt->execute()) {
-					wordfence::status(2, 'error', "Error finishing writing value for {$key} (error: {$dbh->error})");
+					wordfence::status(2, 'error', "Error finishing writing value for {$key} (MySQLi error: [{$dbh->errno}] {$dbh->error})");
 					return false;
 				}
 			}
@@ -454,15 +567,25 @@ class wfConfig {
 					self::getDB()->queryWrite(sprintf("update " . self::table() . " set val=X'%s' where name=%%s", $data), $key);
 				}
 				else {
-					self::getDB()->queryWrite(sprintf("insert ignore into " . self::table() . " (name, val) values (%%s, X'%s')", $data), $key);
+					self::getDB()->queryWrite(sprintf("insert ignore into " . self::table() . " (name, val, autoload) values (%%s, X'%s', %%s)", $data), $key, $autoload);
 				}
 			}
 		}
 		self::getDB()->flush();
+		
+		if ($autoload != self::DONT_AUTOLOAD) {
+			self::updateCachedOption($key, $val);
+		}
 		return true;
 	}
 	
 	private static function delete_ser_chunked($key) {
+		if (!self::$tableExists) {
+			return;
+		}
+		
+		self::removeCachedOption($key);
+		
 		$chunkedValueKey = self::ser_chunked_key($key);
 		$header = self::getDB()->querySingle("select val from " . self::table() . " where name=%s", $chunkedValueKey . 'header');
 		if (!$header) {
@@ -475,35 +598,6 @@ class wfConfig {
 			self::getDB()->queryWrite("delete from " . self::table() . " where name='%s'", $chunkedValueKey . $i);
 		}
 		self::getDB()->queryWrite("delete from " . self::table() . " where name='%s'", $chunkedValueKey . 'header');
-	}
-	
-	public static function getTempDir(){
-		if(! self::$tmpDirCache){
-			$dirs = self::getPotentialTempDirs();
-			$finalDir = 'notmp';
-			wfUtils::errorsOff();
-			foreach($dirs as $dir){
-				$dir = rtrim($dir, '/') . '/';
-				$fh = @fopen($dir . 'wftmptest.txt', 'w');
-				if(! $fh){ continue; }
-				$bytes = @fwrite($fh, 'test');
-				if($bytes != 4){ @fclose($fh); continue; }
-				@fclose($fh);
-				if(! @unlink($dir . 'wftmptest.txt')){ continue; }
-				$finalDir = $dir;
-				break;
-			}
-			wfUtils::errorsOn();
-			self::$tmpDirCache = $finalDir;
-		}
-		if(self::$tmpDirCache == 'notmp'){
-			return false;
-		} else {
-			return self::$tmpDirCache;
-		}
-	}
-	private static function getPotentialTempDirs() {
-		return array(WORDFENCE_PATH . 'tmp/', sys_get_temp_dir(), ABSPATH . 'wp-content/uploads/');
 	}
 	public static function f($key){
 		echo esc_attr(self::get($key));
@@ -521,13 +615,6 @@ class wfConfig {
 	public static function sel($key, $val, $isDefault = false){
 		if((! self::get($key)) && $isDefault){ echo ' selected '; }
 		if(self::get($key) == $val){ echo ' selected '; }
-	}
-	public static function getArray(){
-		$q = self::getDB()->querySelect("select name, val from " . self::table());
-		foreach($q as $row){
-			self::$cache[$row['name']] = $row['val'];
-		}
-		return self::$cache;
 	}
 	private static function getDB(){
 		if(! self::$DB){ 
@@ -566,8 +653,7 @@ class wfConfig {
 		}
 	}
 	public static function liveTrafficEnabled(){
-		if( (! self::get('liveTrafficEnabled')) || self::get('cacheType') == 'falcon' || self::get('cacheType') == 'php'){ return false; }
-		return true;
+		return self::get('liveTrafficEnabled');
 	}
 	public static function enableAutoUpdate(){
 		wfConfig::set('autoUpdate', '1');
@@ -631,11 +717,15 @@ class wfConfig {
 <IfModule mod_php5.c>
 php_flag engine 0
 </IfModule>
+<IfModule mod_php7.c>
+php_flag engine 0
+</IfModule>
 
 AddHandler cgi-script .php .phtml .php3 .pl .py .jsp .asp .htm .shtml .sh .cgi
 Options -ExecCGI
 # END Wordfence code execution protection
 ';
+	private static $_disable_scripts_regex = '/# BEGIN Wordfence code execution protection.+?# END Wordfence code execution protection/s';
 	
 	private static function _uploadsHtaccessFilePath() {
 		$upload_dir = wp_upload_dir();
@@ -663,7 +753,24 @@ Options -ExecCGI
 		if (@file_put_contents($uploads_htaccess_file_path, ($uploads_htaccess_has_content ? "\n\n" : "") . self::$_disable_scripts_htaccess, FILE_APPEND | LOCK_EX) === false) {
 			throw new wfConfigException("Unable to save the .htaccess file needed to disable script execution in the uploads directory.  Please check your permissions on that directory.");
 		}
+		self::set('disableCodeExecutionUploadsPHP7Migrated', true);
 		return true;
+	}
+	
+	public static function migrateCodeExecutionForUploadsPHP7() {
+		if (self::get('disableCodeExecutionUploads')) {
+			if (!self::get('disableCodeExecutionUploadsPHP7Migrated')) {
+				$uploads_htaccess_file_path = self::_uploadsHtaccessFilePath();
+				if (file_exists($uploads_htaccess_file_path)) {
+					$htaccess_contents = file_get_contents($uploads_htaccess_file_path);
+					if (preg_match(self::$_disable_scripts_regex, $htaccess_contents)) {
+						$htaccess_contents = preg_replace(self::$_disable_scripts_regex, self::$_disable_scripts_htaccess, $htaccess_contents); 
+						@file_put_contents($uploads_htaccess_file_path, $htaccess_contents);
+						self::set('disableCodeExecutionUploadsPHP7Migrated', true);
+					}
+				}
+			}
+		}
 	}
 
 	/**
@@ -678,8 +785,8 @@ Options -ExecCGI
 			$htaccess_contents = file_get_contents($uploads_htaccess_file_path);
 
 			// Check that it is in the file
-			if (strpos($htaccess_contents, self::$_disable_scripts_htaccess) !== false) {
-				$htaccess_contents = str_replace(self::$_disable_scripts_htaccess, '', $htaccess_contents);
+			if (preg_match(self::$_disable_scripts_regex, $htaccess_contents)) {
+				$htaccess_contents = preg_replace(self::$_disable_scripts_regex, '', $htaccess_contents);
 
 				$error_message = "Unable to remove code execution protections applied to the .htaccess file in the uploads directory.  Please check your permissions on that file.";
 				if (strlen(trim($htaccess_contents)) === 0) {

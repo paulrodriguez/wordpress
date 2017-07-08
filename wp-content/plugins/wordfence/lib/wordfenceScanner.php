@@ -74,14 +74,27 @@ class wordfenceScanner {
 		if(! (is_array($sigData) && isset($sigData['rules'])) ){
 			throw new Exception("Wordfence could not get the attack signature patterns from the scanning server.");
 		}
+		
+		if (wfWAF::getInstance() && method_exists(wfWAF::getInstance(), 'setMalwareSignatures')) {
+			try { wfWAF::getInstance()->setMalwareSignatures(array()); } catch (Exception $e) { /* Ignore */ }
+		}
 
 		if (is_array($sigData['rules'])) {
+			$wafPatterns = array();
 			foreach ($sigData['rules'] as $key => $signatureRow) {
 				list(, , $pattern) = $signatureRow;
+				$logOnly = (isset($signatureRow[5]) && !empty($signatureRow[5])) ? $signatureRow[5] : false;
 				if (@preg_match('/' . $pattern . '/i', null) === false) {
 					wordfence::status(1, 'error', "A regex Wordfence received from it's servers is invalid. The pattern is: " . esc_html($pattern));
 					unset($sigData['rules'][$key]);
 				}
+				else if (!$logOnly) {
+					$wafPatterns[] = $pattern;
+				}
+			}
+			
+			if (wfWAF::getInstance() && method_exists(wfWAF::getInstance(), 'setMalwareSignatures')) {
+				try { wfWAF::getInstance()->setMalwareSignatures($wafPatterns); } catch (Exception $e) { /* Ignore */ }
 			}
 		}
 
@@ -164,7 +177,7 @@ class wordfenceScanner {
 		}
 		$db = new wfDB();
 		$lastCount = 'whatever';
-		$excludePattern = self::getExcludeFilePattern(self::EXCLUSION_PATTERNS_USER & self::EXCLUSION_PATTERNS_MALWARE);
+		$excludePattern = self::getExcludeFilePattern(self::EXCLUSION_PATTERNS_USER | self::EXCLUSION_PATTERNS_MALWARE); 
 		while(true){
 			$thisCount = $db->querySingle("select count(*) from " . $db->prefix() . "wfFileMods where oldMD5 != newMD5 and knownFile=0");
 			if($thisCount == $lastCount){
@@ -182,11 +195,11 @@ class wordfenceScanner {
 				if($excludePattern && preg_match($excludePattern, $file)){
 					continue;
 				}
-				$fileSum = $rec1['newMD5'];
-
-				if(! file_exists($this->path . $file)){
+				if (!file_exists($this->path . $file)) {
 					continue;
 				}
+				$fileSum = $rec1['newMD5'];
+				
 				$fileExt = '';
 				if(preg_match('/\.([a-zA-Z\d\-]{1,7})$/', $file, $matches)){
 					$fileExt = strtolower($matches[1]);
@@ -234,7 +247,7 @@ class wordfenceScanner {
 				}
 				wfUtils::beginProcessingFile($file);
 
-				$fsize = filesize($this->path . $file); //Checked if too big above
+				$fsize = @filesize($this->path . $file); //Checked if too big above
 				if($fsize > 1000000){
 					$fsize = sprintf('%.2f', ($fsize / 1000000)) . "M";
 				} else {
@@ -287,8 +300,8 @@ class wordfenceScanner {
 								break;
 						}
 							}
-					else if(strpos($file, 'lib/wordfenceScanner.php') === false) {
-							$regexMatched = false;
+					else {
+						$regexMatched = false;
 						foreach ($this->patterns['rules'] as $rule) {
 							$type = (isset($rule[4]) && !empty($rule[4])) ? $rule[4] : 'server';
 							$logOnly = (isset($rule[5]) && !empty($rule[5])) ? $rule[5] : false;
@@ -309,7 +322,7 @@ class wordfenceScanner {
 											'ignoreP' => $this->path . $file,
 											'ignoreC' => $fileSum,
 											'shortMsg' => "File appears to be malicious: " . esc_html($file),
-											'longMsg' => "This file appears to be installed by a hacker to perform malicious activity. If you know about this file you can choose to ignore it to exclude it from future scans. The text we found in this file that matches a known malicious file is: <strong style=\"color: #F00;\">\"" . esc_html((strlen($matchString) > 200 ? substr($matchString, 0, 200) . '...' : $matchString)) . "\"</strong>. The infection type is: <strong>" . esc_html($rule[3]) . '</strong>' . $extraMsg,
+											'longMsg' => "This file appears to be installed by a hacker to perform malicious activity. If you know about this file you can choose to ignore it to exclude it from future scans. The text we found in this file that matches a known malicious file is: <strong style=\"color: #F00;\">\"" . wfUtils::potentialBinaryStringToHTML((strlen($matchString) > 200 ? substr($matchString, 0, 200) . '...' : $matchString)) . "\"</strong>. The infection type is: <strong>" . esc_html($rule[3]) . '</strong>.' . $extraMsg,
 											'data' => array_merge(array(
 												'file' => $file,
 											), $dataForFile),
@@ -322,7 +335,7 @@ class wordfenceScanner {
 							}
 						}
 						if ($regexMatched) { break; }
-						}
+					}
 					if ($treatAsBinary && wfConfig::get('scansEnabled_highSense')) {
 							$badStringFound = false;
 						if (strpos($data, $this->patterns['badstrings'][0]) !== false) {

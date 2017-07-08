@@ -32,9 +32,6 @@ Documentation licensed under CC BY 3.0, http://creativecommons.org/licenses/by/3
 jquery.matchHeight.js, http://brm.io/jquery-match-height/
 Copyright © 2014, liabru, MIT License, http://www.opensource.org/licenses/MIT
 
-imagesloaded.pkgd.js, http://imagesloaded.desandro.com/
-Copyright © 2014, desandro, MIT License, http://www.opensource.org/licenses/MIT
-
 parllax.js, http://pixelcog.github.io/parallax.js/
 Copyright © 2015, PixelCog Inc, MIT License, http://www.opensource.org/licenses/MIT
 
@@ -86,3 +83,14 @@ Copyright © 2015, kaboompics, CC0 Public Domain, https://creativecommons.org/pu
 - Fixed default in Alpha Control.
 - Fixed selective refresh issue, which was causing Customizer to return in older version of WordPress.
 - Fixed text overlapping issue in mobile.
+
+## Version 2.1 ##
+
+- Added image option to Services widget
+- Added color picker to Skills widget.
+- Added more social icons.
+- Added a default icon for unknown links.
+- Added homepage link to site title.
+- Loading imagesloader from the core now.
+- Updated Sendinblue instructions.
+- Fixed word wrapping in homepage.

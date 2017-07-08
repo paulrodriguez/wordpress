@@ -43,6 +43,15 @@ class wfAPI {
 				wfConfig::set('isPaid', '');
 			}
 		}
+		
+		$hasKeyConflict = false;
+		if (isset($dat['_hasKeyConflict'])) {
+			$hasKeyConflict = ($dat['_hasKeyConflict'] == 1);
+			if ($hasKeyConflict) {
+				//new wfNotification(null, wfNotification::PRIORITY_DEFAULT, '<a href="' . network_admin_url('admin.php?page=WordfenceSecOpt') . '">The Wordfence API key you\'re using does not match this site\'s address. Premium features are disabled.</a>', 'wfplugin_keyconflict', null, array(array('link' => 'https://www.wordfence.com/manage-wordfence-api-keys/', 'label' => 'Manage Keys')));
+			}
+		}
+		wfConfig::set('hasKeyConflict', $hasKeyConflict);
 
 		if (!is_array($dat)) {
 			throw new Exception("We received a data structure that is not the expected array when contacting the Wordfence scanning servers and calling the '$action' function.");
